@@ -11,6 +11,7 @@ import poweredByLogo from "../../assets/powered-by-logo.png";
 import Background from "../../assets/bg-login.png";
 import LogoKR from "../../assets/logo-karang-taruna.png";
 import TextLogin from "../../assets/text-login.png";
+import { AlertTriangle } from "lucide-react";
 export default function LoginView() {
   const login = useLogin();
   return (
@@ -20,7 +21,7 @@ export default function LoginView() {
         style={{ backgroundImage: `url(${Background})` }}
       >
         <div className="flex flex-col gap-10 justify-center items-center w-[80%]">
-          <img src={LogoKR} alt="My Logo" className="h-[180px] w-fit" />
+          <img src={LogoKR} alt="My Logo" width={150} />
           <img src={TextLogin} alt="logo text login" />
         </div>
       </div>
@@ -31,7 +32,7 @@ export default function LoginView() {
         >
           <div className="flex flex-col">
             <div className="flex gap-3 items-center mb-5">
-              <img src={LogoKR} alt="My Logo" className="h-[84px] w-fit" />
+              <img src={LogoKR} alt="My Logo" width={59} />
               <h1 className="font-bold text-2xl font-monst">
                 Karang Taruna Digital
               </h1>
@@ -44,20 +45,38 @@ export default function LoginView() {
             </span>
           </div>
           <div className="flex flex-col gap-[25px]">
-            <div className="w-full h-[52px] bg-[#EFF1F999] px-[18px] flex items-center gap-[16px] rounded-lg">
+            <div
+              className={`w-full h-[52px] ${
+                login.error
+                  ? "bg-[#FEECEB] border border-red-500"
+                  : "bg-[#EFF1F999]"
+              }  px-[18px] flex items-center gap-[16px] rounded-lg`}
+            >
               <EmailIcon />
               <input
                 type="text"
                 name="email"
+                value={login.form.email}
+                onChange={login.onChange}
+                onClick={() => login.setError(false)}
                 placeholder="Email Address"
                 className=" bg-transparent w-full h-full outline-none"
               />
             </div>
-            <div className="w-full h-[52px] bg-[#EFF1F999] px-[18px] flex items-center gap-[16px] rounded-lg">
+            <div
+              className={`w-full h-[52px] ${
+                login.error
+                  ? "bg-[#FEECEB] border border-red-500"
+                  : "bg-[#EFF1F999]"
+              }  px-[18px] flex items-center gap-[16px] rounded-lg`}
+            >
               <LockIcon />
               <input
                 type={`${login.isPasswordShow ? "text" : "password"}`}
                 name="password"
+                value={login.form.password}
+                onChange={login.onChange}
+                onClick={() => login.setError(false)}
                 placeholder="Password"
                 className=" bg-transparent w-full h-full outline-none"
               />
@@ -76,11 +95,15 @@ export default function LoginView() {
               )}
             </div>
           </div>
-          <span className="text-[#F04438] opacity-0">
-            Your password is not correct
-          </span>
-          <button className="w-full h-[44px] bg-[#20519F] rounded-xl text-white text-base">
-            Login
+          {login.error && (
+            <span className="text-[#F04438] text-[14px] flex items-center gap-2">
+              <AlertTriangle size={24} />
+              Your password and Email is not correct
+            </span>
+          )}
+
+          <button className="w-full h-[44px] py-3 px-5 bg-[#20519F] text-white text-base flex items-center justify-center text-[16px] font-bold ">
+            Sign In
           </button>
         </form>
       </div>

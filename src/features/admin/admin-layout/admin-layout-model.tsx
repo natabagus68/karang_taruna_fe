@@ -1,7 +1,11 @@
+import { UserApiRepository } from "@data/api/user-api-repository";
+import { UserRepository } from "@domain/repositories/user-repository";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function useAdmin() {
+  // user repository api
+  const userRepo: UserRepository = new UserApiRepository();
   const navigate = useNavigate();
   //navbar status
   const [isOpenNavbar, setIsOpenNavbar] = useState(false);
@@ -10,7 +14,7 @@ export default function useAdmin() {
   //avatar status
   const [isOpenAvatar, setIsOpenavatar] = useState(false);
   // loading state
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   //navbar status click
   const onOpenNavbar = (): void => {
@@ -44,19 +48,14 @@ export default function useAdmin() {
 
   //checking me
   const onIsMe = async (): Promise<void> => {
-    setIsLoading(true);
-    const localStorageData = await JSON.parse(
-      localStorage.getItem("web-admin")
-    );
-    setTimeout(() => {
+    try {
+      setIsLoading(true);
+      await userRepo.check();
       setIsLoading(false);
-      if (!localStorageData?.token) {
-        navigate("../login");
-      }
-      // else {
-      //   navigate(`../${window.location.pathname}`);
-      // }
-    }, 500);
+    } catch (error) {
+      await localStorage.clear();
+      navigate("/login");
+    }
   };
 
   useEffect(() => {

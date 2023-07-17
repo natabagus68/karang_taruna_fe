@@ -6,15 +6,10 @@ import { api } from "./_api";
 
 export class UserApiRepository implements UserRepository {
   constructor(private _api = api) {}
-  async login(
-    email: string,
-    password: string,
-    lineShiftId: string
-  ): Promise<Auth> {
-    const { data } = await this._api.post("hmi/auth/login", {
+  async login(email: string, password: string): Promise<Auth> {
+    const { data } = await this._api.post("web/auth/login", {
       email,
       password,
-      lineShiftId,
     });
     return Auth.create({
       token: data.token,
@@ -31,30 +26,11 @@ export class UserApiRepository implements UserRepository {
         created_at: data.data?.user?.created_at,
         updated_at: data.data?.user?.updated_at,
         deleted_at: data.data?.user?.deleted_at,
-      },
-      lineShift: {
-        id: data.data?.lineShift?.id,
-        line_id: data.data?.lineShift?.line_id,
-        shift: data.data?.lineShift?.shift,
-        start_day: data.data?.lineShift?.start_day,
-        end_day: data.data?.lineShift?.end_day,
-        start_time: data.data?.lineShift?.start_time,
-        end_time: data.data?.lineShift?.end_time,
-        break_start: data.data?.lineShift?.break_start,
-        break_end: data.data?.lineShift?.break_end,
-        allocated_time: data.data?.lineShift?.allocated_time,
-        createdAt: data.data?.lineShift?.createdAt,
-        updatedAt: data.data?.lineShift?.updatedAt,
-        deletedAt: data.data?.lineShift?.deletedAt,
-        line: {
-          id: data.data?.lineShift?.line.id,
-          no: data.data?.lineShift?.line.no,
-        },
       },
     });
   }
   async check(): Promise<Auth> {
-    const { data } = await this._api.get("hmi/auth/me");
+    const { data } = await this._api.get("web/auth/me");
     return Auth.create({
       token: data.token,
       user: {
@@ -71,29 +47,10 @@ export class UserApiRepository implements UserRepository {
         updated_at: data.data?.user?.updated_at,
         deleted_at: data.data?.user?.deleted_at,
       },
-      lineShift: {
-        id: data.data?.lineShift?.id,
-        line_id: data.data?.lineShift?.line_id,
-        shift: data.data?.lineShift?.shift,
-        start_day: data.data?.lineShift?.start_day,
-        end_day: data.data?.lineShift?.end_day,
-        start_time: data.data?.lineShift?.start_time,
-        end_time: data.data?.lineShift?.end_time,
-        break_start: data.data?.lineShift?.break_start,
-        break_end: data.data?.lineShift?.break_end,
-        allocated_time: data.data?.lineShift?.allocated_time,
-        createdAt: data.data?.lineShift?.createdAt,
-        updatedAt: data.data?.lineShift?.updatedAt,
-        deletedAt: data.data?.lineShift?.deletedAt,
-        line: {
-          id: data.data?.lineShift?.line.id,
-          no: data.data?.lineShift?.line.no,
-        },
-      },
     });
   }
   async logout(): Promise<void> {
-    await this._api.delete('hmi/auth/logout')
+    await this._api.delete("hmi/auth/logout");
   }
   get(param?: getParam): Promise<User[]> {
     throw new Error("Method not implemented.");

@@ -1,18 +1,18 @@
 import { Entity } from "./_entity";
 
 export interface IUserProps {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  role_id: string | null;
-  is_active: boolean;
-  photo: string | null;
-  email_verified_at: Date | null;
-  fcm_token: string | null;
-  created_at: string;
-  updated_at: string;
-  deleted_at: Date | null;
+  id?: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  role_id?: string | null;
+  is_active?: boolean;
+  photo?: string | null;
+  email_verified_at?: Date | null;
+  fcm_token?: string | null;
+  created_at?: string;
+  updated_at?: string;
+  deleted_at?: Date | null;
 }
 
 export interface IUser {
