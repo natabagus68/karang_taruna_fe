@@ -25,10 +25,10 @@ const Root = () => {
 };
 
 export default createBrowserRouter([
-  {
-    path: "",
-    element: <Navigate to="../admin" />,
-  },
+  // {
+  //   path: "",
+  //   element: <Navigate to="../admin" />,
+  // },
   {
     path: "login",
     element: <LoginView />,
@@ -52,58 +52,58 @@ export default createBrowserRouter([
         ],
       },
       {
-        path : "approval",
-        element : <ApprovalLayout/>,
-        children : [
+        path: "approval",
+        element: <ApprovalLayout />,
+        children: [
           {
-            path : "",
-            element : <ApprovalTable/>
+            path: "",
+            element: <ApprovalTable />,
           },
           {
-            path : 'declined',
-            element : <Root/>,
-            children : [
+            path: "declined",
+            element: <Root />,
+            children: [
               {
-                path : "",
-                element : <DeclinedTable/>
-              }
-            ]
+                path: "",
+                element: <DeclinedTable />,
+              },
+            ],
           },
           {
             path: ":id/detail-acara",
-            element : <DetailAcara/>
+            element: <DetailAcara />,
           },
           {
             path: ":id/detail-berita",
-            element : <DetailBerita/>
-          }
-        ]
+            element: <DetailBerita />,
+          },
+        ],
       },
       {
-        path : 'updates',
-        element : <Updatelayout/>,
-        children : [
+        path: "updates",
+        element: <Updatelayout />,
+        children: [
           {
-            path : '',
-            element : <UpdateTable/>
+            path: "",
+            element: <UpdateTable />,
           },
           {
-            path : ':idAcara/detail',
-            element : <UpdateTable/>
+            path: ":idAcara/detail",
+            element: <UpdateTable />,
           },
           {
-            path : ':idBerita/berita',
-            element : <UpdateTable/>
+            path: ":idBerita/berita",
+            element: <UpdateTable />,
           },
-        ]
+        ],
       },
       {
         path: "dashboard",
-        element: <Dashboard />
+        element: <Dashboard />,
       },
       {
         path: "leaderboard",
-        element: <LeaderBoard />
+        element: <LeaderBoard />,
       },
       {
         path: "master-data",

@@ -39,7 +39,7 @@ export default function useAdmin() {
   //on logout
   const onLogout = async (): Promise<void> => {
     try {
-      await localStorage.removeItem("web-admin");
+      await localStorage.clear();
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -59,7 +59,7 @@ export default function useAdmin() {
   };
 
   useEffect(() => {
-    onIsMe();
+    // onIsMe();
   }, []);
 
   return {
